@@ -4,10 +4,13 @@ version := "0.1"
 
 scalaVersion := "2.12.4"
 
-lazy val root = (project in file("."))
+lazy val common = project
+lazy val queen = project.dependsOn(common)
+lazy val hive = project.dependsOn(common)
 
-lazy val queen = project.dependsOn(root)
-lazy val hive = project.dependsOn(root)
+lazy val root = (project in file(".")).aggregate(common, queen, hive)
+
+
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.5.9",
